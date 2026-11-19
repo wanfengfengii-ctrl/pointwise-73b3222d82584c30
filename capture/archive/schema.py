@@ -30,6 +30,15 @@ def create_archive_schema(db: sqlite3.Connection) -> None:
             sha256 TEXT NOT NULL CHECK (length(sha256) = 64)
         )
     ''')
+    db.execute('''
+        CREATE TABLE IF NOT EXISTS browser_downloads (
+            task_id TEXT PRIMARY KEY NOT NULL,
+            download_id TEXT NOT NULL UNIQUE,
+            report_id INTEGER NOT NULL UNIQUE,
+            FOREIGN KEY (task_id, report_id)
+                REFERENCES reports(task_id, report_id) DEFERRABLE INITIALLY DEFERRED
+        )
+    ''')
 
 
 def _optional_text(value: int | None) -> str | None:
