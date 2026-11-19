@@ -1,0 +1,3 @@
+time,channel,seq,value
+10,gauge,1,17
+19,gauge,2,24
